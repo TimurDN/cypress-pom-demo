@@ -1,0 +1,13 @@
+{
+  "name": "Timur QA",
+  "email": "timur_qa_123@example.com",
+  "password": "Test@1234",
+  "firstName": "Timur",
+  "lastName": "Naumov",
+  "address": "123 QA Street",
+  "country": "India",
+  "state": "Karnataka",
+  "city": "Bangalore",
+  "zipcode": "560001",
+  "mobile": "9876543210"
+}

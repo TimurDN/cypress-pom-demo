@@ -2,7 +2,7 @@ describe('Login and Logout Functionality', () => {
   beforeEach(function () {
     cy.clearCookies();
     cy.clearLocalStorage();
-    cy.visit(Cypress.env('baseUrl'));
+    cy.visit('/');
     cy.fixture('users/user').as('user');
   });
 
@@ -25,7 +25,7 @@ describe('Login and Logout Functionality', () => {
   });
 
   it('should show error with invalid credentials', function () {
-    cy.visit(Cypress.env('baseUrl'));
+    cy.visit('/');
     cy.contains('Signup / Login').click();
     cy.get('input[data-qa="login-email"]').type('notarealuser@example.com');
     cy.get('input[data-qa="login-password"]').type('wrongpassword');

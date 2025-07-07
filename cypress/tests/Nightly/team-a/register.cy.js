@@ -5,7 +5,7 @@ const registrationPage = new RegistrationPage();
 
 describe('User Registration', () => {
   beforeEach(function () {
-    cy.visit(Cypress.env('baseUrl'));
+   cy.visit('/');
     cy.fixture('users/user').as('user');
   });
 

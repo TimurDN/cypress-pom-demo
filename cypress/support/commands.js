@@ -1,53 +1,64 @@
-// AUTH
+// AUTH LOCATORS
+const SIGNUP_LOGIN_LINK = 'Signup / Login';
+const LOGOUT_LINK = 'Logout';
+
+const LOGIN_EMAIL_INPUT = 'input[data-qa="login-email"]';
+const LOGIN_PASSWORD_INPUT = 'input[data-qa="login-password"]';
+const LOGIN_BUTTON = 'button[data-qa="login-button"]';
+
+const SIGNUP_NAME_INPUT = 'input[data-qa="signup-name"]';
+const SIGNUP_EMAIL_INPUT = 'input[data-qa="signup-email"]';
+const SIGNUP_BUTTON = 'button[data-qa="signup-button"]';
+
+const GENDER_MR = '#id_gender1';
+const PASSWORD_INPUT = '#password';
+const DAYS_SELECT = '#days';
+const MONTHS_SELECT = '#months';
+const YEARS_SELECT = '#years';
+const FIRST_NAME_INPUT = '#first_name';
+const LAST_NAME_INPUT = '#last_name';
+const ADDRESS1_INPUT = '#address1';
+const COUNTRY_SELECT = '#country';
+const STATE_INPUT = '#state';
+const CITY_INPUT = '#city';
+const ZIPCODE_INPUT = '#zipcode';
+const MOBILE_INPUT = '#mobile_number';
+const CREATE_ACCOUNT_BUTTON = 'button[data-qa="create-account"]';
+
+// AUTH COMMANDS
 Cypress.Commands.add('login', (email, password) => {
-  cy.visit('/');
-  cy.contains('Signup / Login').click();
-  cy.get('input[data-qa="login-email"]').type(email);
-  cy.get('input[data-qa="login-password"]').type(password);
-  cy.get('button[data-qa="login-button"]').click();
+  cy.contains(SIGNUP_LOGIN_LINK).click();
+  cy.get(LOGIN_EMAIL_INPUT).type(email);
+  cy.get(LOGIN_PASSWORD_INPUT).type(password);
+  cy.get(LOGIN_BUTTON).click();
 });
 
 Cypress.Commands.add('logout', () => {
-  cy.contains('Logout').click();
+  cy.contains(LOGOUT_LINK).click();
 });
 
-// REGISTRATION
-Cypress.Commands.add('register', (user) => {
-  cy.visit('/');
-  cy.contains('Signup / Login').click();
-  cy.get('input[data-qa="signup-name"]').type(user.name);
-  cy.get('input[data-qa="signup-email"]').type(user.email);
-  cy.get('button[data-qa="signup-button"]').click();
-
-  cy.get('#id_gender1').check();
-  cy.get('#password').type(user.password);
-  cy.get('#days').select('10');
-  cy.get('#months').select('May');
-  cy.get('#years').select('1990');
-  cy.get('#first_name').type(user.firstName);
-  cy.get('#last_name').type(user.lastName);
-  cy.get('#address1').type(user.address);
-  cy.get('#country').select(user.country);
-  cy.get('#state').type(user.state);
-  cy.get('#city').type(user.city);
-  cy.get('#zipcode').type(user.zipcode);
-  cy.get('#mobile_number').type(user.mobile);
-  cy.get('button[data-qa="create-account"]').click();
+// Step 1: Signup form (name + email)
+Cypress.Commands.add('startRegistration', (user) => {
+  cy.contains(SIGNUP_LOGIN_LINK).click();
+  cy.get(SIGNUP_NAME_INPUT).type(user.name);
+  cy.get(SIGNUP_EMAIL_INPUT).type(user.email);
+  cy.get(SIGNUP_BUTTON).click();
 });
 
-// PRODUCT
-Cypress.Commands.add('searchProduct', (productName) => {
-  cy.get('input[data-qa="search-product"]').type(productName);
-  cy.get('button[data-qa="search-button"]').click();
-});
-
-Cypress.Commands.add('addProductToCart', (productName) => {
-  cy.contains(productName).parents('.product-overlay').within(() => {
-    cy.contains('Add to cart').click({ force: true });
-  });
-  cy.contains('Continue Shopping').click();
-});
-
-Cypress.Commands.add('goToCart', () => {
-  cy.contains('Cart').click();
+// Step 2: Full form after initial signup
+Cypress.Commands.add('completeRegistrationForm', (user) => {
+  cy.get(GENDER_MR).check();
+  cy.get(PASSWORD_INPUT).type(user.password);
+  cy.get(DAYS_SELECT).select('10');
+  cy.get(MONTHS_SELECT).select('May');
+  cy.get(YEARS_SELECT).select('1990');
+  cy.get(FIRST_NAME_INPUT).type(user.firstName);
+  cy.get(LAST_NAME_INPUT).type(user.lastName);
+  cy.get(ADDRESS1_INPUT).type(user.address);
+  cy.get(COUNTRY_SELECT).select(user.country);
+  cy.get(STATE_INPUT).type(user.state);
+  cy.get(CITY_INPUT).type(user.city);
+  cy.get(ZIPCODE_INPUT).type(user.zipcode);
+  cy.get(MOBILE_INPUT).type(user.mobile);
+  cy.get(CREATE_ACCOUNT_BUTTON).click();
 });

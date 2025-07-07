@@ -2,8 +2,8 @@ name: Cypress Nightly Tests
 
 on:
   schedule:
-    - cron: '0 5 * * *'  # 5:00 AM UTC daily
-  workflow_dispatch:      # Manual trigger from GitHub UI
+    - cron: '0 5 * * *'  # Runs every day at 5:00 AM UTC
+  workflow_dispatch:      # Allows manual trigger from GitHub Actions UI
 
 jobs:
   cypress-run:

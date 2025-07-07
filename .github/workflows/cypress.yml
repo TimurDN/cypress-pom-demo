@@ -23,7 +23,7 @@ jobs:
         run: npm ci
 
       - name: Run Cypress tests
-        run: npx cypress run --browser chrome --headless --spec "cypress/e2e/Nightly/team-a/**/*.cy.js"
+        run: npx cypress run --browser chrome --headless --spec "cypress/tests/Nightly/team-a/**/*.cy.js"
 
       - name: Upload test artifacts
         if: failure()

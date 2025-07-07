@@ -24,6 +24,8 @@ jobs:
 
       - name: Run Cypress tests
         run: npx cypress run --browser chrome --headless --spec "cypress/tests/Nightly/team-a/**/*.cy.js"
+        env:
+          CYPRESS_baseUrl: https://automationexercise.com
 
       - name: Upload test artifacts
         if: failure()

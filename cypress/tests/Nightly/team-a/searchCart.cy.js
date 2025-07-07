@@ -12,7 +12,7 @@ describe('Cart Functionality', () => {
   beforeEach(() => {
     cy.clearCookies();
     cy.clearLocalStorage();
-    cy.visit('/');
+    cy.visit(Cypress.env('baseUrl'));
 
     cy.fixture('users/user').then((user) => {
       cy.login(user.email, user.password);

@@ -17,14 +17,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Cypress in headless Chrome
+      - name: Run Cypress tests
         run: npx cypress run --browser chrome --headless --spec "cypress/e2e/Nightly/team-a/**/*.cy.js"
 
-      - name: Upload artifacts if tests fail
+      - name: Upload test artifacts
         if: failure()
         uses: actions/upload-artifact@v4
         with:

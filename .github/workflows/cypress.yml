@@ -22,8 +22,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Cypress dummy test
-        run: npx cypress run --spec "cypress/tests/Nightly/team-a/minimal.cy.js" --browser chrome --headless --config-file cypress.config.js
+      - name: Run Cypress Nightly team-a suite
+        run: npx cypress run --spec "cypress/tests/Nightly/team-a/**/*.cy.js" --browser chrome --headless --config-file cypress.config.js
 
       - name: Upload test artifacts
         if: failure()

@@ -1,27 +1,26 @@
 describe('Login and Logout Functionality', () => {
-  beforeEach(function () {
-    cy.clearCookies();
-    cy.clearLocalStorage();
-    cy.visit('/');
-    cy.fixture('users/user').as('user');
-  });
-
   it('should log in successfully and display correct user state', function () {
-    cy.login(this.user.email, this.user.password);
-    cy.contains(this.user.name).should('be.visible');
-    cy.contains('Logout').should('be.visible');
-    cy.contains('Cart').should('be.visible');
-    cy.contains('Signup / Login').should('not.exist');
-    cy.url().should('eq', Cypress.env('baseUrl') + '/');
+    cy.fixture('users/user').then((user) => {
+      cy.visit('/');
+      cy.login(user.email, user.password);
+      cy.contains(user.name).should('be.visible');
+      cy.contains('Logout').should('be.visible');
+      cy.contains('Cart').should('be.visible');
+      cy.contains('Signup / Login').should('not.exist');
+      cy.url().should('eq', Cypress.config('baseUrl') + '/');
+    });
   });
 
   it('should log out successfully', function () {
-    cy.login(this.user.email, this.user.password);
-    cy.logout();
-    cy.url().should('include', '/login');
-    cy.contains('Signup / Login').should('be.visible');
-    cy.contains(this.user.name).should('not.exist');
-    cy.contains('Logout').should('not.exist');
+    cy.fixture('users/user').then((user) => {
+      cy.visit('/');
+      cy.login(user.email, user.password);
+      cy.logout();
+      cy.url().should('include', '/login');
+      cy.contains('Signup / Login').should('be.visible');
+      cy.contains(user.name).should('not.exist');
+      cy.contains('Logout').should('not.exist');
+    });
   });
 
   it('should show error with invalid credentials', function () {

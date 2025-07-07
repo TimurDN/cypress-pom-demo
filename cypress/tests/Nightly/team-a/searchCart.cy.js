@@ -16,7 +16,7 @@ describe('Cart Functionality', () => {
     cy.fixture('users/user').then((user) => {
       cy.login(user.email, user.password);
     });
-
+    cy.get('#cartModal').should('not.be.visible');
     cartPage.goToCart();
     cartPage.clearCartIfNotEmpty();
     cartAssertions.assertCartIsEmpty();
@@ -27,6 +27,7 @@ describe('Cart Functionality', () => {
     cy.contains('Searched Products').should('be.visible');
     cy.contains('.productinfo', productName).should('exist');
     cartPage.addProductToCart(productName);
+    cy.get('#cartModal').should('not.be.visible');
     cartPage.goToCart();
     cartAssertions.assertProductInCart(productName);
   });
@@ -40,6 +41,7 @@ describe('Cart Functionality', () => {
   it('should remove product from cart and confirm cart is empty', () => {
     searchPage.searchProduct(productName);
     cartPage.addProductToCart(productName);
+    cy.get('#cartModal').should('not.be.visible');
     cartPage.goToCart();
     cartAssertions.assertProductInCart(productName);
     cy.get('a.cart_quantity_delete').click();
@@ -49,10 +51,10 @@ describe('Cart Functionality', () => {
   it('should allow adding multiple products to cart', () => {
     searchPage.searchProduct(productName);
     cartPage.addProductToCart(productName);
-
+    cy.get('#cartModal').should('not.be.visible');
     searchPage.searchProduct(secondProductName);
     cartPage.addProductToCart(secondProductName);
-
+    cy.get('#cartModal').should('not.be.visible');
     cartPage.goToCart();
     cartAssertions.assertProductInCart(productName);
     cartAssertions.assertProductInCart(secondProductName);

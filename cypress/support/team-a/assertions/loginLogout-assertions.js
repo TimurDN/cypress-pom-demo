@@ -1,17 +1,5 @@
-import * as LoginLocators from '../support/team-a/locators/login-locators.js';
+import * as LoginLocators from '../../../support/team-a/locators/login-locators';
 
-Cypress.Commands.add('login', (email, password) => {
-  cy.contains(LoginLocators.SIGNUP_LOGIN_LINK).click();
-  cy.get(LoginLocators.LOGIN_EMAIL_INPUT).type(email);
-  cy.get(LoginLocators.LOGIN_PASSWORD_INPUT).type(password);
-  cy.get(LoginLocators.LOGIN_BUTTON).click();
-});
-
-Cypress.Commands.add('logout', () => {
-  cy.contains(LoginLocators.LOGOUT_LINK).click();
-});
-
-// Custom Assertions
 Cypress.Commands.add('assertLoggedInState', (user) => {
   cy.contains(user.name).should('be.visible');
   cy.contains(LoginLocators.LOGOUT_LINK).should('be.visible');

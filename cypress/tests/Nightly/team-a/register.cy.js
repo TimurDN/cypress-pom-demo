@@ -20,17 +20,14 @@ describe(
       };
 
       registrationPage.startRegistration(uniqueUser);
-
       cy.get(RegistrationLocators.GENDER_MR, { timeout: 5000 }).should('be.visible');
       registrationPage.completeRegistrationForm(uniqueUser);
-
-      cy.contains('Account Created!').should('be.visible');
+      cy.contains(RegistrationLocators.ACCOUNT_CREATED_TEXT).should('be.visible');
     });
 
     it('Should show error when registering with an already existing email', function () {
       registrationPage.startRegistration(this.user);
-
-      cy.contains('Email Address already exist!').should('be.visible');
+      cy.contains(RegistrationLocators.EMAIL_ALREADY_EXISTS_TEXT).should('be.visible');
     });
   }
 );

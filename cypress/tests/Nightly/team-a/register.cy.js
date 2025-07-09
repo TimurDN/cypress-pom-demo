@@ -22,7 +22,7 @@ describe(
       registrationPage.startRegistration(uniqueUser);
       cy.get(RegistrationLocators.GENDER_MR, { timeout: 5000 }).should('be.visible');
       registrationPage.completeRegistrationForm(uniqueUser);
-      cy.contains(RegistrationLocators.ACCOUNT_CREATED_TEXT).should('be.visible');
+      cy.get(RegistrationLocators.ACCOUNT_CREATED_TEXT).should('be.visible');
     });
 
     it('Should show error when registering with an already existing email', function () {

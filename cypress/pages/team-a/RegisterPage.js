@@ -2,7 +2,7 @@ import * as RegistrationLocators from '../../support/team-a/locators/register-lo
 
 export class RegistrationPage {
   startRegistration(user) {
-    cy.contains(RegistrationLocators.SIGNUP_LOGIN_LINK).click();
+    cy.get(RegistrationLocators.SIGNUP_LOGIN_LINK).click();
     cy.get(RegistrationLocators.SIGNUP_NAME_INPUT).type(user.name);
     cy.get(RegistrationLocators.SIGNUP_EMAIL_INPUT).type(user.email);
     cy.get(RegistrationLocators.SIGNUP_BUTTON).click();

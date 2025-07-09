@@ -1,83 +1,85 @@
 import { CartPage } from '../../../pages/team-a/CartPage';
 import { cartAssertions } from '../../../support/team-a/assertions/cartAssertions';
 import { SearchPage } from '../../../pages/team-a/SearchPage';
+import * as CartLocators from '../../../support/team-a/locators/cart-locators.js';
+import * as SearchLocators from '../../../support/team-a/locators/search-locators.js';
 
 const cartPage = new CartPage();
 const searchPage = new SearchPage();
 
 describe(
-  'Cart Functionality',
-  { retries: 2 },
-  () => {
-    const productName = 'Blue Top';
-    const secondProductName = 'Men Tshirt';
+    'Cart Functionality',
+    { retries: 2 },
+    () => {
+        const productName = 'Blue Top';
+        const secondProductName = 'Men Tshirt';
 
-    beforeEach(() => {
-      cy.clearCookies();
-      cy.clearLocalStorage();
-      cy.visit('/');
+        beforeEach(() => {
+            cy.clearCookies();
+            cy.clearLocalStorage();
+            cy.visit('/');
 
-      cy.fixture('users/user').then((user) => {
-        cy.login(user.email, user.password);
-      });
+            cy.fixture('users/user').then((user) => {
+                cy.login(user.email, user.password);
+            });
 
-      cy.get('#cartModal').should('not.be.visible');
-      cartPage.goToCart();
-      cartPage.clearCartIfNotEmpty();
-      cartAssertions.assertCartIsEmpty();
-    });
+            cy.get(CartLocators.CART_MODAL).should('not.be.visible');
+            cartPage.goToCart();
+            cartPage.clearCartIfNotEmpty();
+            cartAssertions.assertCartIsEmpty();
+        });
 
-    it('should display correct product in cart after search and add', () => {
-      searchPage.searchProduct(productName);
+        it('should display correct product in cart after search and add', () => {
+            searchPage.searchProduct(productName);
 
-      cy.contains('Searched Products').should('be.visible');
-      cy.contains('.productinfo', productName).should('exist');
+            cy.get(SearchLocators.SEARCHED_PRODUCTS_TITLE).contains('Searched Products');
+            cy.contains(SearchLocators.PRODUCT_INFO, productName).should('exist');
 
-      cartPage.addProductToCart(productName);
-      cy.contains('Continue Shopping').click();
-      cy.get('#cartModal').should('not.be.visible');
+            cartPage.addProductToCart(productName);
+            cy.get(CartLocators.CONTINUE_SHOPPING_BUTTON).click();
+            cy.get(CartLocators.CART_MODAL).should('not.be.visible');
 
-      cartPage.goToCart();
-      cartAssertions.assertProductInCart(productName);
-    });
+            cartPage.goToCart();
+            cartAssertions.assertProductInCart(productName);
+        });
 
-    it('should show no products when searching for a non-existent item', () => {
-      const nonexistentProduct = 'qwertyuiop-doesnotexist-123';
+        it('should show no products when searching for a non-existent item', () => {
+            const nonexistentProduct = 'qwertyuiop-doesnotexist-123';
 
-      searchPage.searchProduct(nonexistentProduct);
-      cy.get('.productinfo').should('not.exist');
-    });
+            searchPage.searchProduct(nonexistentProduct);
+            cy.get(SearchLocators.PRODUCT_INFO).should('not.exist');
+        });
 
-    it('should remove product from cart and confirm cart is empty', () => {
-      searchPage.searchProduct(productName);
-      cartPage.addProductToCart(productName);
+        it('should remove product from cart and confirm cart is empty', () => {
+            searchPage.searchProduct(productName);
+            cartPage.addProductToCart(productName);
 
-      cy.contains('Continue Shopping').click();
-      cy.get('#cartModal').should('not.be.visible');
+            cy.get(CartLocators.CONTINUE_SHOPPING_BUTTON).click();
+            cy.get(CartLocators.CART_MODAL).should('not.be.visible');
 
-      cartPage.goToCart();
-      cartAssertions.assertProductInCart(productName);
+            cartPage.goToCart();
+            cartAssertions.assertProductInCart(productName);
 
-      cy.get('a.cart_quantity_delete').click();
-      cartAssertions.assertCartIsEmpty();
-    });
+            cy.get(CartLocators.CART_DELETE_BUTTON).click();
+            cartAssertions.assertCartIsEmpty();
+        });
 
-    it('should allow adding multiple products to cart', () => {
-      searchPage.searchProduct(productName);
-      cartPage.addProductToCart(productName);
+        it('should allow adding multiple products to cart', () => {
+            searchPage.searchProduct(productName);
+            cartPage.addProductToCart(productName);
 
-      cy.contains('Continue Shopping').click();
-      cy.get('#cartModal').should('not.be.visible');
+            cy.get(CartLocators.CONTINUE_SHOPPING_BUTTON).click();
+            cy.get(CartLocators.CART_MODAL).should('not.be.visible');
 
-      searchPage.searchProduct(secondProductName);
-      cartPage.addProductToCart(secondProductName);
+            searchPage.searchProduct(secondProductName);
+            cartPage.addProductToCart(secondProductName);
 
-      cy.contains('Continue Shopping').click();
-      cy.get('#cartModal').should('not.be.visible');
+            cy.get(CartLocators.CONTINUE_SHOPPING_BUTTON).click();
+            cy.get(CartLocators.CART_MODAL).should('not.be.visible');
 
-      cartPage.goToCart();
-      cartAssertions.assertProductInCart(productName);
-      cartAssertions.assertProductInCart(secondProductName);
-    });
-  }
+            cartPage.goToCart();
+            cartAssertions.assertProductInCart(productName);
+            cartAssertions.assertProductInCart(secondProductName);
+        });
+    }
 );

@@ -10,3 +10,5 @@ export const CART_DESCRIPTION = '.cart_description';
 export const CART_PRICE = '.cart_price';
 export const CART_QUANTITY_DISABLED_BUTTON = '.cart_quantity button.disabled';
 export const CART_TABLE_ROWS = '.cart_info tbody tr';
+export const CART_MODAL = '#cartModal';
+export const CONTINUE_SHOPPING_BUTTON = 'button[data-dismiss="modal"]';

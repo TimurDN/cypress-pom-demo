@@ -18,3 +18,4 @@ export const MOBILE_INPUT = '#mobile_number';
 export const CREATE_ACCOUNT_BUTTON = 'button[data-qa="create-account"]';
 export const ACCOUNT_CREATED_TEXT = '[data-qa="account-created"]';
 export const EMAIL_ALREADY_EXISTS_TEXT = 'Email Address already exist!';
+export const ACCOUNT_DELETE_BUTTON ='a[href="/delete_account"]'
